@@ -1,7 +1,7 @@
 package com.ictbda.iot.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ictbda.iot.entity.RespBean;
+import com.ictbda.iot.entity.Output;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-resources",
                 "/v2/api-docs",
                 "/swagger-resources/configuration/security",
-                "/verifyCode",
+                "/iot-api/verifyCode",
                 "/websocket/**");
     }
 
@@ -63,12 +63,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin ( )
                 .usernameParameter ("username")
                 .passwordParameter ("password")
-                .loginProcessingUrl ("/doLogin")
+                .loginProcessingUrl ("/iot-api/doLogin")
                 .loginPage ("/login")
                 .successHandler ((req, resp, authentication) -> {
                     resp.setContentType ("application/json;charset=utf-8");
                     PrintWriter out = resp.getWriter ( );
-                    RespBean ok = RespBean.ok ("登录成功!");
+                    Output ok = Output.ok ("登录成功!");
                     String s = new ObjectMapper ( ).writeValueAsString (ok);
                     out.write (s);
                     out.flush ( );
@@ -77,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler ((req, resp, exception) -> {
                     resp.setContentType ("application/json;charset=utf-8");
                     PrintWriter out = resp.getWriter ( );
-                    RespBean respBean = RespBean.error ("登录失败!");
+                    Output respBean = Output.error ("登录失败!");
                     if ( exception instanceof LockedException ) {
                         respBean.setMsg ("账户被锁定，请联系管理员!");
                     } else if ( exception instanceof CredentialsExpiredException ) {
@@ -96,10 +96,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll ( )
                 .and ( )
                 .logout ( )
+                .logoutUrl ("/iot-api/doLogout")
                 .logoutSuccessHandler ((req, resp, authentication) -> {
                     resp.setContentType ("application/json;charset=utf-8");
                     PrintWriter out = resp.getWriter ( );
-                    out.write (new ObjectMapper ( ).writeValueAsString (RespBean.ok ("注销成功!")));
+                    out.write (new ObjectMapper ( ).writeValueAsString (Output.ok ("注销成功!")));
                     out.flush ( );
                     out.close ( );
                 })
@@ -111,7 +112,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     resp.setContentType ("application/json;charset=utf-8");
                     resp.setStatus (401);
                     PrintWriter out = resp.getWriter ( );
-                    RespBean respBean = RespBean.error ("访问失败!");
+                    Output respBean = Output.error ("访问失败!");
                     if ( authException instanceof InsufficientAuthenticationException ) {
                         respBean.setMsg ("请求失败，请联系管理员!");
                     }

@@ -2,7 +2,7 @@ package com.ictbda.iot.controller;
 
 import com.ictbda.iot.config.security.VerificationCode;
 import com.ictbda.iot.entity.LoginUser;
-import com.ictbda.iot.entity.RespBean;
+import com.ictbda.iot.entity.Output;
 import com.ictbda.iot.service.LoginUserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,7 @@ import java.io.IOException;
  * @since 2020-06-03 13:54:44
  */
 @RestController
-@RequestMapping()
+@RequestMapping("/iot-api")
 public class LoginUserController {
     /**
      * 服务对象
@@ -39,8 +39,8 @@ public class LoginUserController {
     }
 
     @GetMapping("/login")
-    public RespBean login() {
-        return RespBean.error("尚未登录，请登录!");
+    public Output login() {
+        return Output.error("尚未登录，请登录!");
     }
 
     @GetMapping("/verifyCode")
@@ -53,10 +53,10 @@ public class LoginUserController {
     }
 
     @PostMapping("updatePassword")
-    public RespBean updatePassword(@RequestBody LoginUser user){
+    public Output updatePassword(@RequestBody LoginUser user){
 
         loginUserService.update (user);
 
-        return RespBean.ok ("修改成功！");
+        return Output.ok ("修改成功！");
     }
 }

@@ -1,7 +1,7 @@
 package com.ictbda.iot.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ictbda.iot.entity.RespBean;
+import com.ictbda.iot.entity.Output;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -29,7 +29,7 @@ public class VerificationCodeFilter extends GenericFilter {
                 //验证码不正确
                 resp.setContentType("application/json;charset=utf-8");
                 PrintWriter out = resp.getWriter();
-                out.write(new ObjectMapper ().writeValueAsString(RespBean.error (("验证码填写错误"))));
+                out.write(new ObjectMapper ().writeValueAsString(Output.error (("验证码填写错误"))));
                 out.flush();
                 out.close();
                 return;
