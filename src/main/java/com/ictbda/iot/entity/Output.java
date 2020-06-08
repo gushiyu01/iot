@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * @Author: Create by gsy
- * @Date: Create in 2020/6/4 11:10
+ * @Date: Create in 2020/6/4 15:08
  * @Description: 统一出参
  */
 public class Output implements Serializable {

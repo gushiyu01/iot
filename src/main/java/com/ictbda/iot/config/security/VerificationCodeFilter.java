@@ -21,7 +21,7 @@ public class VerificationCodeFilter extends GenericFilter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
-        if ("POST".equals(req.getMethod()) && "/doLogin".equals(req.getServletPath())) {
+        if ("POST".equals(req.getMethod()) && "/iot-api/doLogin".equals(req.getServletPath())) {
             //登录请求C
             String code = req.getParameter("code");
             String verifyCode = (String) req.getSession().getAttribute("verifyCode");
