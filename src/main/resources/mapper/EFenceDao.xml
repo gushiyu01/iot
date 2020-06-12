@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ictbda.iot.dao.EFenceDao">
+
+    <resultMap type="com.ictbda.iot.entity.EFence" id="EFenceMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="createUserId" column="create_user_id" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUserId" column="update_user_id" jdbcType="INTEGER"/>
+        <result property="equipmentId" column="equipment_id" jdbcType="VARCHAR"/>
+        <result property="fenceType" column="fence_type" jdbcType="INTEGER"/>
+        <result property="lng" column="lng" jdbcType="NUMERIC"/>
+        <result property="lat" column="lat" jdbcType="NUMERIC"/>
+        <result property="radius" column="radius" jdbcType="INTEGER"/>
+        <result property="areaCode" column="area_code" jdbcType="INTEGER"/>
+        <result property="areaName" column="area_name" jdbcType="VARCHAR"/>
+        <result property="areaLevel" column="area_level" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+        <result property="loginUserId" column="login_user_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="EFenceMap">
+        select
+          id, create_user_id, create_time, update_time, update_user_id, equipment_id, fence_type, lng, lat, radius, area_code, area_name, area_level, user_id, del_flag, login_user_id
+        from iot.e_fence
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="EFenceMap">
+        select
+          id, create_user_id, create_time, update_time, update_user_id, equipment_id, fence_type, lng, lat, radius, area_code, area_name, area_level, user_id, del_flag, login_user_id
+        from iot.e_fence
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="EFenceMap">
+        select
+          id, create_user_id, create_time, update_time, update_user_id, equipment_id, fence_type, lng, lat, radius, area_code, area_name, area_level, user_id, del_flag, login_user_id
+        from iot.e_fence
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="updateUserId != null">
+                and update_user_id = #{updateUserId}
+            </if>
+            <if test="equipmentId != null">
+                and equipment_id = #{equipmentId}
+            </if>
+            <if test="fenceType != null">
+                and fence_type = #{fenceType}
+            </if>
+            <if test="lng != null">
+                and lng = #{lng}
+            </if>
+            <if test="lat != null">
+                and lat = #{lat}
+            </if>
+            <if test="radius != null">
+                and radius = #{radius}
+            </if>
+            <if test="areaCode != null">
+                and area_code = #{areaCode}
+            </if>
+            <if test="areaName != null and areaName != ''">
+                and area_name = #{areaName}
+            </if>
+            <if test="areaLevel != null and areaLevel != ''">
+                and area_level = #{areaLevel}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="delFlag != null">
+                and del_flag = #{delFlag}
+            </if>
+            <if test="loginUserId != null">
+                and login_user_id = #{loginUserId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into iot.e_fence(create_user_id, create_time, update_time, update_user_id, equipment_id, fence_type, lng, lat, radius, area_code, area_name, area_level, user_id, del_flag, login_user_id)
+        values (#{createUserId}, #{createTime}, #{updateTime}, #{updateUserId}, #{equipmentId}, #{fenceType}, #{lng}, #{lat}, #{radius}, #{areaCode}, #{areaName}, #{areaLevel}, #{userId}, #{delFlag}, #{loginUserId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update iot.e_fence
+        <set>
+            <if test="createUserId != null">
+                create_user_id = #{createUserId},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUserId != null">
+                update_user_id = #{updateUserId},
+            </if>
+            <if test="equipmentId != null">
+                equipment_id = #{equipmentId},
+            </if>
+            <if test="fenceType != null">
+                fence_type = #{fenceType},
+            </if>
+            <if test="lng != null">
+                lng = #{lng},
+            </if>
+            <if test="lat != null">
+                lat = #{lat},
+            </if>
+            <if test="radius != null">
+                radius = #{radius},
+            </if>
+            <if test="areaCode != null">
+                area_code = #{areaCode},
+            </if>
+            <if test="areaName != null and areaName != ''">
+                area_name = #{areaName},
+            </if>
+            <if test="areaLevel != null and areaLevel != ''">
+                area_level = #{areaLevel},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="loginUserId != null">
+                login_user_id = #{loginUserId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from iot.e_fence where id = #{id}
+    </delete>
+
+</mapper>

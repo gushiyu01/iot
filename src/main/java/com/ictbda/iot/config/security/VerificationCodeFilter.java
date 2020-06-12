@@ -25,6 +25,9 @@ public class VerificationCodeFilter extends GenericFilter {
             //登录请求C
             String code = req.getParameter("code");
             String verifyCode = (String) req.getSession().getAttribute("verifyCode");
+
+            req.getSession ().setAttribute ("username", req.getParameter("username"));
+
             if (code == null || verifyCode == null || "".equals(code) || !verifyCode.toLowerCase().equals(code.toLowerCase())) {
                 //验证码不正确
                 resp.setContentType("application/json;charset=utf-8");

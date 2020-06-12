@@ -4,6 +4,7 @@ import com.ictbda.iot.config.security.VerificationCode;
 import com.ictbda.iot.entity.LoginUser;
 import com.ictbda.iot.entity.Output;
 import com.ictbda.iot.service.LoginUserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -44,6 +45,7 @@ public class LoginUserController {
     }
 
     @GetMapping("/verifyCode")
+    @ApiOperation("获取验证码")
     public void verifyCode(HttpSession session, HttpServletResponse resp) throws IOException {
         VerificationCode code = new VerificationCode();
         BufferedImage image = code.getImage();
@@ -52,11 +54,14 @@ public class LoginUserController {
         VerificationCode.output(image,resp.getOutputStream());
     }
 
-    @PostMapping("updatePassword")
-    public Output updatePassword(@RequestBody LoginUser user){
+//    @PostMapping("updatePassword")
+//    @ApiOperation ("更新登录密码")
+//    public Output updatePassword(@RequestBody LoginUser user){
+//
+//        loginUserService.update (user);
+//
+//        return Output.ok ("修改成功！");
+//    }
 
-        loginUserService.update (user);
 
-        return Output.ok ("修改成功！");
-    }
 }

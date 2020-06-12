@@ -1,6 +1,7 @@
 package com.ictbda.iot.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -11,11 +12,18 @@ import java.util.logging.Logger;
  */
 public class DateUtils {
 
+    /**
+     * 常见日期格式
+     */
+    public static final String PATTERN_ONE = "yyyy-MM-dd HH:mm:ss";
+    public static final String PATTERN_TWO = "yyyy-MM-dd";
+    public static final String PATTERN_THREE = "yyyy/MM/dd HH/mm/ss";
+    public static final String PATTERN_FOUR = "yyyyMMddHHmmss";
     private static Logger logger = Logger.getLogger("DateUtils");
-    public static final String YYYYMMDD = "yyyy-MM-dd";
+
 
     public static String convertLongToString(long longDate){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat(PATTERN_ONE);
         String string = sdf.format(longDate);
         return string;
     }
@@ -46,7 +54,7 @@ public class DateUtils {
         Date date = null;
         try {
             if (pattern == null) {
-                pattern = YYYYMMDD;
+                pattern = PATTERN_TWO;
             }
             SimpleDateFormat format = new SimpleDateFormat(pattern);
             date = format.parse(strDate);
@@ -66,7 +74,7 @@ public class DateUtils {
         String strDate = null;
         try {
             if (pattern == null) {
-                pattern = YYYYMMDD;
+                pattern = PATTERN_TWO;
             }
             SimpleDateFormat format = new SimpleDateFormat(pattern);
             strDate = format.format(date);
@@ -74,5 +82,17 @@ public class DateUtils {
             logger.info("formatDate error:" +e);
         }
         return strDate;
+    }
+
+    /**
+     * utc时间转换为北京时间
+     * @param date
+     * @return
+     */
+    public static Date utcToBeijing(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) + 8);
+        return calendar.getTime ();
     }
 }

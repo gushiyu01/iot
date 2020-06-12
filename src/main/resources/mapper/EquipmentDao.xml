@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ictbda.iot.dao.EquipmentDao">
+
+    <resultMap type="com.ictbda.iot.entity.Equipment" id="EquipmentMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="equipmentId" column="equipment_id" jdbcType="VARCHAR"/>
+        <result property="equName" column="equ_name" jdbcType="VARCHAR"/>
+        <result property="equType" column="equ_type" jdbcType="VARCHAR"/>
+        <result property="equBattery" column="equ_battery" jdbcType="VARCHAR"/>
+        <result property="equSignal" column="equ_signal" jdbcType="VARCHAR"/>
+        <result property="equStatus" column="equ_status" jdbcType="INTEGER"/>
+        <result property="bindingStatus" column="binding_status" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+        <result property="loginUserId" column="login_user_id" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="EquipmentMap">
+        select
+          id, equipment_id, equ_name, equ_type, equ_battery, equ_signal, equ_status, binding_status, create_time, del_flag, login_user_id, update_time
+        from iot.equipment
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="EquipmentMap">
+        select
+          id, equipment_id, equ_name, equ_type, equ_battery, equ_signal, equ_status, binding_status, create_time, del_flag, login_user_id, update_time
+        from iot.equipment
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="EquipmentMap">
+        select
+          id, equipment_id, equ_name, equ_type, equ_battery, equ_signal, equ_status, binding_status, create_time, del_flag, login_user_id, update_time
+        from iot.equipment
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="equipmentId != null">
+                and equipment_id = #{equipmentId}
+            </if>
+            <if test="equName != null and equName != ''">
+                and equ_name = #{equName}
+            </if>
+            <if test="equType != null and equType != ''">
+                and equ_type = #{equType}
+            </if>
+            <if test="equBattery != null and equBattery != ''">
+                and equ_battery = #{equBattery}
+            </if>
+            <if test="equSignal != null and equSignal != ''">
+                and equ_signal = #{equSignal}
+            </if>
+            <if test="equStatus != null">
+                and equ_status = #{equStatus}
+            </if>
+            <if test="bindingStatus != null">
+                and binding_status = #{bindingStatus}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="delFlag != null">
+                and del_flag = #{delFlag}
+            </if>
+            <if test="loginUserId != null">
+                and login_user_id = #{loginUserId}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            and del_flag = 1
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into iot.equipment(equipment_id, equ_name, equ_type, create_time,  login_user_id, update_time)
+        values (#{equipmentId}, #{equName}, #{equType}, #{createTime},  #{loginUserId}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update iot.equipment
+        <set>
+            <if test="equipmentId != null">
+                equipment_id = #{equipmentId},
+            </if>
+            <if test="equName != null and equName != ''">
+                equ_name = #{equName},
+            </if>
+            <if test="equType != null and equType != ''">
+                equ_type = #{equType},
+            </if>
+            <if test="equBattery != null and equBattery != ''">
+                equ_battery = #{equBattery},
+            </if>
+            <if test="equSignal != null and equSignal != ''">
+                equ_signal = #{equSignal},
+            </if>
+            <if test="equStatus != null">
+                equ_status = #{equStatus},
+            </if>
+            <if test="bindingStatus != null">
+                binding_status = #{bindingStatus},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="loginUserId != null">
+                login_user_id = #{loginUserId},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from iot.equipment where id = #{id}
+    </delete>
+
+</mapper>

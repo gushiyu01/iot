@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ictbda.iot.dao.UseUserDao">
+
+    <resultMap type="com.ictbda.iot.entity.UseUser" id="UseUserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="INTEGER"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="picUrl" column="pic_url" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="dealDepartment" column="deal_department" jdbcType="VARCHAR"/>
+        <result property="approvalDepartment" column="approval_department" jdbcType="VARCHAR"/>
+        <result property="charge" column="charge" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="isCriminal" column="is_criminal" jdbcType="INTEGER"/>
+        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createUserName" column="create_user_name" jdbcType="VARCHAR"/>
+        <result property="equipmentId" column="equipment_id" jdbcType="VARCHAR"/>
+        <result property="superviseId" column="supervise_id" jdbcType="INTEGER"/>
+        <result property="loginUserId" column="login_user_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UseUserMap">
+        select
+          id, name, gender, age, phone, pic_url, address, deal_department, approval_department, charge, status, is_criminal, start_time, end_time, del_flag, create_time, update_time, create_user_name, equipment_id, supervise_id, login_user_id
+        from iot.use_user
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UseUserMap">
+        select
+          id, name, gender, age, phone, pic_url, address, deal_department, approval_department, charge, status, is_criminal, start_time, end_time, del_flag, create_time, update_time, create_user_name, equipment_id, supervise_id, login_user_id
+        from iot.use_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UseUserMap">
+        select
+          id, name, gender, age, phone, pic_url, address, deal_department, approval_department, charge, status, is_criminal, start_time, end_time, del_flag, create_time, update_time, create_user_name, equipment_id, supervise_id, login_user_id
+        from iot.use_user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="gender != null">
+                and gender = #{gender}
+            </if>
+            <if test="age != null">
+                and age = #{age}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="picUrl != null and picUrl != ''">
+                and pic_url = #{picUrl}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="dealDepartment != null and dealDepartment != ''">
+                and deal_department = #{dealDepartment}
+            </if>
+            <if test="approvalDepartment != null and approvalDepartment != ''">
+                and approval_department = #{approvalDepartment}
+            </if>
+            <if test="charge != null and charge != ''">
+                and charge = #{charge}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="isCriminal != null">
+                and is_criminal = #{isCriminal}
+            </if>
+            <if test="startTime != null">
+                and start_time = #{startTime}
+            </if>
+            <if test="endTime != null">
+                and end_time = #{endTime}
+            </if>
+            <if test="delFlag != null">
+                and del_flag = #{delFlag}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="createUserName != null and createUserName != ''">
+                and create_user_name = #{createUserName}
+            </if>
+            <if test="equipmentId != null">
+                and equipment_id = #{equipmentId}
+            </if>
+            <if test="superviseId != null">
+                and supervise_id = #{superviseId}
+            </if>
+            <if test="loginUserId != null">
+                and login_user_id = #{loginUserId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into iot.use_user(name, gender, age, phone, pic_url, address, deal_department, approval_department, charge, status, is_criminal, start_time, end_time, create_time, create_user_name, equipment_id, supervise_id, login_user_id)
+        values (#{name}, #{gender}, #{age}, #{phone}, #{picUrl}, #{address}, #{dealDepartment}, #{approvalDepartment}, #{charge}, #{status}, #{isCriminal}, #{startTime}, #{endTime}, now(), #{createUserName}, #{equipmentId}, #{superviseId}, #{loginUserId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update iot.use_user
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="picUrl != null and picUrl != ''">
+                pic_url = #{picUrl},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="dealDepartment != null and dealDepartment != ''">
+                deal_department = #{dealDepartment},
+            </if>
+            <if test="approvalDepartment != null and approvalDepartment != ''">
+                approval_department = #{approvalDepartment},
+            </if>
+            <if test="charge != null and charge != ''">
+                charge = #{charge},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="isCriminal != null">
+                is_criminal = #{isCriminal},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="createUserName != null and createUserName != ''">
+                create_user_name = #{createUserName},
+            </if>
+            <if test="equipmentId != null">
+                equipment_id = #{equipmentId},
+            </if>
+            <if test="superviseId != null">
+                supervise_id = #{superviseId},
+            </if>
+            <if test="loginUserId != null">
+                login_user_id = #{loginUserId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from iot.use_user where id = #{id}
+    </delete>
+
+    <select id="selectUseUserIdByEquipmentId" parameterType="string" resultType="long">
+        select id from iot.use_user where equipment_id = #{id}
+    </select>
+</mapper>

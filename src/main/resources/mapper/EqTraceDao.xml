@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ictbda.iot.dao.EqTraceDao">
+
+    <resultMap type="com.ictbda.iot.entity.EqTrace" id="EqTraceMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="lng" column="lng" jdbcType="NUMERIC"/>
+        <result property="lat" column="lat" jdbcType="NUMERIC"/>
+        <result property="dataPushTime" column="data_push_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="equipmentId" column="equipment_id" jdbcType="VARCHAR"/>
+        <result property="useUserId" column="use_user_id" jdbcType="INTEGER"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="EqTraceMap">
+        select
+          id, lng, lat, data_push_time, create_time, type, equipment_id, use_user_id, del_flag
+        from iot.eq_trace
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="EqTraceMap">
+        select
+          id, lng, lat, data_push_time, create_time, type, equipment_id, use_user_id, del_flag
+        from iot.eq_trace
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="EqTraceMap">
+        select
+          id, lng, lat, data_push_time, create_time, type, equipment_id, use_user_id, del_flag
+        from iot.eq_trace
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="lng != null">
+                and lng = #{lng}
+            </if>
+            <if test="lat != null">
+                and lat = #{lat}
+            </if>
+            <if test="dataPushTime != null">
+                and data_push_time = #{dataPushTime}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="equipmentId != null">
+                and equipment_id = #{equipmentId}
+            </if>
+            <if test="useUserId != null">
+                and use_user_id = #{useUserId}
+            </if>
+            <if test="delFlag != null">
+                and del_flag = #{delFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into iot.eq_trace(lng, lat, data_push_time, create_time, type, equipment_id, use_user_id)
+        values (#{lng}, #{lat}, #{dataPushTime}, now(), #{type}, #{equipmentId}, #{useUserId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update iot.eq_trace
+        <set>
+            <if test="lng != null">
+                lng = #{lng},
+            </if>
+            <if test="lat != null">
+                lat = #{lat},
+            </if>
+            <if test="dataPushTime != null">
+                data_push_time = #{dataPushTime},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="equipmentId != null">
+                equipment_id = #{equipmentId},
+            </if>
+            <if test="useUserId != null">
+                use_user_id = #{useUserId},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from iot.eq_trace where id = #{id}
+    </delete>
+
+    <select id="queryEqTraceByTime" parameterType="map" resultMap="EqTraceMap">
+        select
+          id, lng, lat, data_push_time, create_time, type, equipment_id, use_user_id, del_flag
+        from iot.eq_trace
+        where create_time between #{startTime} and #{endTime}
+        and equipment_id = #{equipmentId}
+        and use_user_id = #{useUserId}
+    </select>
+
+</mapper>

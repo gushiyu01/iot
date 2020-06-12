@@ -51,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/v2/api-docs",
                 "/swagger-resources/configuration/security",
                 "/iot-api/verifyCode",
+                "/ictbda/sendData",
                 "/websocket/**");
     }
 
