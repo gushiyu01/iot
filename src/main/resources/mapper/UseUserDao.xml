@@ -21,15 +21,22 @@
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="createUserName" column="create_user_name" jdbcType="VARCHAR"/>
-        <result property="equipmentId" column="equipment_id" jdbcType="VARCHAR"/>
+        <result property="equipmentId" column="equipment_id" jdbcType="INTEGER"/>
         <result property="superviseId" column="supervise_id" jdbcType="INTEGER"/>
         <result property="loginUserId" column="login_user_id" jdbcType="INTEGER"/>
+        <result property="idCardNo" column="id_card_no" jdbcType="VARCHAR"/>
+        <result property="superviseName" column="superviseName" jdbcType="VARCHAR"/>
+        <result property="superviseCode" column="superviseCode" jdbcType="VARCHAR"/>
+        <result property="equipmentCode" column="equipmentCode" jdbcType="VARCHAR"/>
+        <result property="equipmentName" column="equipmentName" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="UseUserMap">
         select
-          id, name, gender, age, phone, pic_url, address, deal_department, approval_department, charge, status, is_criminal, start_time, end_time, del_flag, create_time, update_time, create_user_name, equipment_id, supervise_id, login_user_id
+          id, name, gender, age, phone, pic_url, address, deal_department, approval_department, charge, status,
+          is_criminal, start_time, end_time, del_flag, create_time, update_time, create_user_name, equipment_id,
+          supervise_id, login_user_id, id_card_no
         from iot.use_user
         where id = #{id}
     </select>
@@ -37,7 +44,9 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="UseUserMap">
         select
-          id, name, gender, age, phone, pic_url, address, deal_department, approval_department, charge, status, is_criminal, start_time, end_time, del_flag, create_time, update_time, create_user_name, equipment_id, supervise_id, login_user_id
+          id, name, gender, age, phone, pic_url, address, deal_department, approval_department, charge, status,
+          is_criminal, start_time, end_time, del_flag, create_time, update_time, create_user_name, equipment_id,
+          supervise_id, login_user_id, id_card_no
         from iot.use_user
         limit #{offset}, #{limit}
     </select>
@@ -45,79 +54,89 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="UseUserMap">
         select
-          id, name, gender, age, phone, pic_url, address, deal_department, approval_department, charge, status, is_criminal, start_time, end_time, del_flag, create_time, update_time, create_user_name, equipment_id, supervise_id, login_user_id
-        from iot.use_user
+        uu.id, uu.name, uu.gender, uu.age, uu.phone, uu.pic_url, uu.address, uu.deal_department, uu.approval_department, uu.charge, uu.status,
+        uu.is_criminal, uu.start_time, uu.end_time, uu.del_flag, uu.create_time, uu.update_time, uu.create_user_name, uu.equipment_id,
+        uu.supervise_id, uu.login_user_id, uu.id_card_no, su.name as superviseName, e.equipment_id as equipmentCode, e.equ_name as equipmentName,
+        su.supervise_id as superviseCode
+        from iot.use_user uu left join iot.supervise_user su on uu.supervise_id=su.id left join equipment e on uu.equipment_id=e.id
         <where>
             <if test="id != null">
-                and id = #{id}
+                and uu.id = #{id}
             </if>
             <if test="name != null and name != ''">
-                and name = #{name}
+                and uu.name = #{name}
             </if>
             <if test="gender != null">
-                and gender = #{gender}
+                and uu.gender = #{gender}
             </if>
             <if test="age != null">
-                and age = #{age}
+                and uu.age = #{age}
             </if>
             <if test="phone != null and phone != ''">
-                and phone = #{phone}
+                and uu.phone = #{phone}
             </if>
             <if test="picUrl != null and picUrl != ''">
-                and pic_url = #{picUrl}
+                and uu.pic_url = #{picUrl}
             </if>
             <if test="address != null and address != ''">
-                and address = #{address}
+                and uu.address = #{address}
             </if>
             <if test="dealDepartment != null and dealDepartment != ''">
-                and deal_department = #{dealDepartment}
+                and uu.deal_department = #{dealDepartment}
             </if>
             <if test="approvalDepartment != null and approvalDepartment != ''">
-                and approval_department = #{approvalDepartment}
+                and uu.approval_department = #{approvalDepartment}
             </if>
             <if test="charge != null and charge != ''">
-                and charge = #{charge}
+                and uu.charge = #{charge}
             </if>
             <if test="status != null and status != ''">
-                and status = #{status}
+                and uu.status = #{status}
             </if>
             <if test="isCriminal != null">
-                and is_criminal = #{isCriminal}
+                and uu.is_criminal = #{isCriminal}
             </if>
             <if test="startTime != null">
-                and start_time = #{startTime}
+                and uu.start_time = #{startTime}
             </if>
             <if test="endTime != null">
-                and end_time = #{endTime}
+                and uu.end_time = #{endTime}
             </if>
             <if test="delFlag != null">
-                and del_flag = #{delFlag}
+                and uu.del_flag = #{delFlag}
             </if>
             <if test="createTime != null">
-                and create_time = #{createTime}
+                and uu.create_time = #{createTime}
             </if>
             <if test="updateTime != null">
-                and update_time = #{updateTime}
+                and uu.update_time = #{updateTime}
             </if>
             <if test="createUserName != null and createUserName != ''">
-                and create_user_name = #{createUserName}
+                and uu.create_user_name = #{createUserName}
             </if>
             <if test="equipmentId != null">
-                and equipment_id = #{equipmentId}
+                and uu.equipment_id = #{equipmentId}
             </if>
             <if test="superviseId != null">
-                and supervise_id = #{superviseId}
+                and uu.supervise_id = #{superviseId}
             </if>
             <if test="loginUserId != null">
-                and login_user_id = #{loginUserId}
+                and uu.login_user_id = #{loginUserId}
+            </if>
+            <if test="idCardNo != null and idCardNo != ''">
+                and uu.id_card_no = #{idCardNo}
             </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into iot.use_user(name, gender, age, phone, pic_url, address, deal_department, approval_department, charge, status, is_criminal, start_time, end_time, create_time, create_user_name, equipment_id, supervise_id, login_user_id)
-        values (#{name}, #{gender}, #{age}, #{phone}, #{picUrl}, #{address}, #{dealDepartment}, #{approvalDepartment}, #{charge}, #{status}, #{isCriminal}, #{startTime}, #{endTime}, now(), #{createUserName}, #{equipmentId}, #{superviseId}, #{loginUserId})
+        insert into iot.use_user(name, gender, age, phone, pic_url, address, deal_department, approval_department,
+        charge, status, is_criminal, start_time, end_time, create_time, create_user_name, equipment_id, supervise_id,
+        login_user_id, id_card_no)
+        values (#{name}, #{gender}, #{age}, #{phone}, #{picUrl}, #{address}, #{dealDepartment}, #{approvalDepartment},
+         #{charge}, #{status}, #{isCriminal}, #{startTime}, #{endTime}, now(), #{createUserName}, #{equipmentId},
+         #{superviseId}, #{loginUserId}, #{idCardNo})
     </insert>
 
     <!--通过主键修改数据-->
@@ -184,6 +203,9 @@
             <if test="loginUserId != null">
                 login_user_id = #{loginUserId},
             </if>
+            <if test="idCardNo != null and idCardNo != ''">
+                id_card_no = #{idCardNo},
+            </if>
         </set>
         where id = #{id}
     </update>
@@ -194,6 +216,11 @@
     </delete>
 
     <select id="selectUseUserIdByEquipmentId" parameterType="string" resultType="long">
-        select id from iot.use_user where equipment_id = #{id}
+        SELECT
+          uu.id
+        FROM use_user uu
+          LEFT JOIN equipment e
+            ON uu.equipment_id = e.id
+        WHERE e.equipment_id = #{equipmentId}
     </select>
 </mapper>

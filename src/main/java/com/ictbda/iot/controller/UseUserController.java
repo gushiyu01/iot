@@ -90,10 +90,10 @@ public class UseUserController extends BaseController{
      */
     @GetMapping("/deleteUseUser")
     @ApiOperation("删除使用人员信息")
-    public Output deleteUseUser(@RequestParam("useUserId") Long useUserId){
+    public Output deleteUseUser(@RequestParam("id") Long id){
 
         UseUser useUser = new UseUser ();
-        useUser.setId (useUserId);
+        useUser.setId (id);
         useUser.setDelFlag (2);
 
         UseUser insert = useUserService.update (useUser);

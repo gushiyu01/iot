@@ -14,12 +14,13 @@
         <result property="createUserId" column="create_user_id" jdbcType="INTEGER"/>
         <result property="updateUserId" column="update_user_id" jdbcType="INTEGER"/>
         <result property="loginUserId" column="login_user_id" jdbcType="INTEGER"/>
+        <result property="superviseId" column="supervise_id" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="SuperviseUserMap">
         select
-          id, name, phone, position, company, del_flag, create_time, update_time, create_user_id, update_user_id, login_user_id
+          id, name, phone, position, company, del_flag, create_time, update_time, create_user_id, update_user_id, login_user_id, supervise_id
         from iot.supervise_user
         where id = #{id}
     </select>
@@ -27,7 +28,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="SuperviseUserMap">
         select
-          id, name, phone, position, company, del_flag, create_time, update_time, create_user_id, update_user_id, login_user_id
+          id, name, phone, position, company, del_flag, create_time, update_time, create_user_id, update_user_id, login_user_id, supervise_id
         from iot.supervise_user
         limit #{offset}, #{limit}
     </select>
@@ -35,7 +36,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="SuperviseUserMap">
         select
-          id, name, phone, position, company, del_flag, create_time, update_time, create_user_id, update_user_id, login_user_id
+          id, name, phone, position, company, del_flag, create_time, update_time, create_user_id, update_user_id, login_user_id, supervise_id
         from iot.supervise_user
         <where>
             <if test="id != null">
@@ -71,13 +72,16 @@
             <if test="loginUserId != null">
                 and login_user_id = #{loginUserId}
             </if>
+            <if test="superviseId != null and superviseId != ''">
+                and supervise_id = #{superviseId}
+            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into iot.supervise_user(name, phone, position, company, del_flag, create_time, update_time, create_user_id, update_user_id, login_user_id)
-        values (#{name}, #{phone}, #{position}, #{company}, #{delFlag}, #{createTime}, #{updateTime}, #{createUserId}, #{updateUserId}, #{loginUserId})
+        insert into iot.supervise_user(name, phone, position, company, create_time, update_time, create_user_id, update_user_id, login_user_id, supervise_id)
+        values (#{name}, #{phone}, #{position}, #{company}, #{createTime}, #{updateTime}, #{createUserId}, #{updateUserId}, #{loginUserId}, #{superviseId})
     </insert>
 
     <!--通过主键修改数据-->
@@ -113,6 +117,9 @@
             </if>
             <if test="loginUserId != null">
                 login_user_id = #{loginUserId},
+            </if>
+            <if test="superviseId != null and superviseId != ''">
+                supervise_id = #{superviseId},
             </if>
         </set>
         where id = #{id}

@@ -96,6 +96,55 @@ public class UseUser implements Serializable {
     */
     private Long loginUserId;
 
+    /**
+     * 身份证号码
+     */
+    private String idCardNo;
+
+    private String equipmentName;
+    private String equipmentCode;
+    private String superviseName;
+    private String superviseCode;
+
+    public String getSuperviseCode() {
+        return superviseCode;
+    }
+
+    public void setSuperviseCode(String superviseCode) {
+        this.superviseCode = superviseCode;
+    }
+
+    public String getEquipmentName() {
+        return equipmentName;
+    }
+
+    public void setEquipmentName(String equipmentName) {
+        this.equipmentName = equipmentName;
+    }
+
+    public String getEquipmentCode() {
+        return equipmentCode;
+    }
+
+    public void setEquipmentCode(String equipmentCode) {
+        this.equipmentCode = equipmentCode;
+    }
+
+    public String getSuperviseName() {
+        return superviseName;
+    }
+
+    public void setSuperviseName(String superviseName) {
+        this.superviseName = superviseName;
+    }
+
+    public String getIdCardNo() {
+        return idCardNo;
+    }
+
+    public void setIdCardNo(String idCardNo) {
+        this.idCardNo = idCardNo;
+    }
 
     public Long getId() {
         return id;

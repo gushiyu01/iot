@@ -3,6 +3,8 @@ package com.ictbda.iot.service;
 import com.ictbda.iot.entity.EqTrace;
 import com.ictbda.iot.entity.Equipment;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @Author: Create by gsy
  * @Date: Create in 2020/6/10 14:26
@@ -24,7 +26,13 @@ public interface OutputService {
 
     /**
      * 处理电池数据
-     * @param eqTrace
+     * @param equipment
      */
     void dealBatteryData(Equipment equipment);
+
+    /**
+     * 判断是否在范围之内
+     * @param eqTrace
+     */
+    void judgeRange(EqTrace eqTrace);
 }

@@ -64,6 +64,11 @@ public interface UseUserDao {
      */
     int deleteById(Long id);
 
-    Long selectUseUserIdByEquipmentId(String id);
+    /**
+     * 根据设备code，查询使用人员主键id
+     * @param equipmentId
+     * @return
+     */
+    Long selectUseUserIdByEquipmentId(String equipmentId);
 
 }

@@ -8,7 +8,7 @@
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="updateUserId" column="update_user_id" jdbcType="INTEGER"/>
-        <result property="equipmentId" column="equipment_id" jdbcType="VARCHAR"/>
+        <result property="equipmentId" column="equipment_id" jdbcType="INTEGER"/>
         <result property="fenceType" column="fence_type" jdbcType="INTEGER"/>
         <result property="lng" column="lng" jdbcType="NUMERIC"/>
         <result property="lat" column="lat" jdbcType="NUMERIC"/>

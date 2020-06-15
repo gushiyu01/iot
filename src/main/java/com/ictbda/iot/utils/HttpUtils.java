@@ -54,9 +54,6 @@ public class HttpUtils {
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 
             String s = method(connection);
-
-            List<Map<String, Object>> parse = (List<Map<String, Object>>)JSONArray.parse(s);
-            System.out.println(parse.get(0));
             return s;
         } catch (Exception e) {
             e.printStackTrace();

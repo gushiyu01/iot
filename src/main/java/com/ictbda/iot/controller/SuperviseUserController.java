@@ -95,10 +95,10 @@ public class SuperviseUserController extends BaseController {
      */
     @GetMapping("/deleteSuperviseUser")
     @ApiOperation("删除监管人员信息")
-    public Output deleteSuperviseUser(@RequestParam("superviseUserId") Long superviseUserId){
+    public Output deleteSuperviseUser(@RequestParam("id") Long id){
 
         SuperviseUser superviseUser = new SuperviseUser ();
-        superviseUser.setId (superviseUserId);
+        superviseUser.setId (id);
         superviseUser.setDelFlag (2);
 
         SuperviseUser insert = superviseUserService.update (superviseUser);

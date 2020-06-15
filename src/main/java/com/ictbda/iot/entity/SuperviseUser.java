@@ -56,6 +56,18 @@ public class SuperviseUser implements Serializable {
     */
     private Long loginUserId;
 
+    /**
+     * 监管人员id
+     */
+    private String superviseId;
+
+    public String getSuperviseId() {
+        return superviseId;
+    }
+
+    public void setSuperviseId(String superviseId) {
+        this.superviseId = superviseId;
+    }
 
     public Long getId() {
         return id;
