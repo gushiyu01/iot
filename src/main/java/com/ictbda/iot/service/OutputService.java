@@ -3,8 +3,6 @@ package com.ictbda.iot.service;
 import com.ictbda.iot.entity.EqTrace;
 import com.ictbda.iot.entity.Equipment;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @Author: Create by gsy
  * @Date: Create in 2020/6/10 14:26

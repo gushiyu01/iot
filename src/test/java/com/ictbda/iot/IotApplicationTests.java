@@ -1,6 +1,8 @@
 package com.ictbda.iot;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ictbda.iot.utils.CoordinateTransformUtil;
+import com.ictbda.iot.utils.EFenceUtils;
 import com.ictbda.iot.utils.HttpUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +22,8 @@ public class IotApplicationTests {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder ( );
         String s = encoder.encode (pwd);
         System.out.println ( s );
+
+        System.out.println ( Math.cos (1/6) );
     }
 
 
@@ -32,6 +36,22 @@ public class IotApplicationTests {
         Object o = map.get ("addressComponent");
         System.out.println ( o );
         System.out.println ( s );
+    }
+
+    @Test
+    public void test3(){
+        boolean b = EFenceUtils.isInCircle (1000, 113.639834,34.753862, 113.648817,34.753884);
+        System.out.println ( b );
+
+        double[] doubles = CoordinateTransformUtil.bd09towgs84 (116.403963,39.915119);
+        for (double aDouble : doubles) {
+            System.out.println (aDouble );
+        }
+
+        double[] doubles1 = CoordinateTransformUtil.gcj02towgs84 (116.397451, 39.909187);
+        for (double v : doubles1) {
+            System.out.println ( v );
+        }
     }
 
 }

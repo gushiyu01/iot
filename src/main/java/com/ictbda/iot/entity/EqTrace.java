@@ -36,7 +36,7 @@ public class EqTrace implements Serializable {
     */
     private Integer type;
     /**
-    * 设备id
+    * 设备id code 非主键id
     */
     private String equipmentId;
     /**
