@@ -24,7 +24,7 @@ public class EFenceUtils {
     }
 
     /**
-     * 计算是否在圆上（单位/千米）
+     * 计算是否在圆上（单位/米）
      *
      * @param radius 半径
      * @param lat1   纬度

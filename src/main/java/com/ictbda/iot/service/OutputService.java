@@ -31,6 +31,7 @@ public interface OutputService {
     /**
      * 判断是否在范围之内
      * @param eqTrace
+     * @return
      */
-    void judgeRange(EqTrace eqTrace);
+    boolean judgeRange(EqTrace eqTrace);
 }

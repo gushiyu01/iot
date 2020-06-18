@@ -9,7 +9,10 @@ import com.ictbda.iot.entity.EFence;
 import com.ictbda.iot.entity.EqTrace;
 import com.ictbda.iot.entity.Equipment;
 import com.ictbda.iot.service.OutputService;
+import com.ictbda.iot.utils.CoordinateTransformUtil;
+import com.ictbda.iot.utils.EFenceUtils;
 import com.ictbda.iot.utils.HttpUtils;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -68,21 +71,34 @@ public class OutputServiceImpl implements OutputService {
      * @param eqTrace
      */
     @Override
-    public void judgeRange(EqTrace eqTrace){
+    public boolean judgeRange(EqTrace eqTrace){
 
         EFence eFence = new EFence ();
         eFence.setUserId (useUserDao.selectUseUserIdByEquipmentId (eqTrace.getEquipmentId ()));
         eFence.setDelFlag (1);
         List<EFence> eFences = eFenceDao.queryAll (eFence);
+        boolean b = false;
         if(eFences.size ()>0){
+            EFence fence = eFences.get (0);
+            // 圆
             if ( eFences.get (0).getFenceType () == 1 ){
+                // 装换为火星坐标 double lng, double lat
+                double[] d1 = CoordinateTransformUtil.gcj02towgs84 (fence.getLng (), fence.getLat ());
+                double[] d2 = CoordinateTransformUtil.gcj02towgs84 (eqTrace.getLng ( ), eqTrace.getLat ( ));
+                // double radius, double lat1, double lng1, double lat2, double lng2
+                b = EFenceUtils.isInCircle (fence.getRadius ( ), d1[1], d1[0], d2[1], d2[0]);
 
-            } else if (eFences.get (0).getFenceType () == 1) {
+                // 多边形
+            } else if (eFences.get (0).getFenceType () == 2) {
 
-            } else if (eFences.get (0).getFenceType () == 1) {
+
+                // 特定区域
+            } else if (eFences.get (0).getFenceType () == 3) {
 
             }
         }
+
+        return b;
 
     }
 
